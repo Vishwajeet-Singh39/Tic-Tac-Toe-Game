@@ -3,7 +3,7 @@ using namespace std;
 class players{
     string playerX,playerO,p;
     char grid[3][3]={'.','.','.','.','.','.','.','.','.'};
-    int x,y;
+    int x,y,i,j;
     public: 
         players(string p1,string p2,string px){
             playerX=p1;
@@ -30,8 +30,8 @@ class players{
             return;
         }
         void display(){
-            for(int i=0;i<3;i++){
-                for(int j=0;j<3;j++){
+            for(i=0;i<3;i++){
+                for(j=0;j<3;j++){
                     cout<<grid[i][j]<<" ";
                 }
                 cout<<endl;
@@ -91,7 +91,30 @@ class players{
             }
         }
         void check(){
-
+            char temp='.';
+            for(i=0;i<3;i++){
+                for(j=0;j<3;j++){
+                    if(grid[i][j]!='.' && grid[i][j]!=temp){
+                        temp=grid[i][j];
+                        gameOver();
+                    }
+                }
+            }
+            for(i=0;i<3;i++){
+                for(j=0;j<3;j++){
+                    if(grid[j][i]!='.' && grid[i][i]!=temp){
+                        temp=grid[j][i];
+                        gameOver();
+                    }
+                }
+            }
+            for(i=0;i<3;i++){
+                    if(grid[i][i]!='.' && grid[i][i]!=temp){
+                        temp=grid[i][j];
+                        gameOver();
+                    }
+                }
+            }
         }
 };
 int main(){
