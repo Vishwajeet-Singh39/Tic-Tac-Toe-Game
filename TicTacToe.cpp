@@ -4,11 +4,19 @@ class players{
     string playerX,playerO,p;
     char grid[3][3]={'.','.','.','.','.','.','.','.','.'};
     int x,y,i,j;
+    char temp;
     public: 
         players(string p1,string p2,string px){
             playerX=p1;
             playerO=p2;
             p=px;
+        }
+        void gridReset(){
+            for(i=0;i<3;i++){
+                for(j=0;j<3;j++){
+                    grid[i][j]='.';
+                }
+            }
         }
         void checkValidity(){
             if(p==playerX){
@@ -25,6 +33,7 @@ class players{
             }
             else{
                 cout<<p<<" is not a registered player."<<endl;
+                cin>>p;
                 checkValidity();
             }
             return;
@@ -58,14 +67,13 @@ class players{
                 return;
             }
             else{
-                cout<<x<<" is not a valid row."<<endl;
+                cout<<x<<" is not a valid column."<<endl;
                 getColumnLocation();
             }
         }
         void TurnX(){
             if(grid[x][y]=='.'){
                 grid[x][y]='X';
-                display();
                 check();
                 p=playerO;
                 checkValidity();
@@ -79,7 +87,6 @@ class players{
         void TurnO(){
             if(grid[x][y]=='.'){
                 grid[x][y]='O';
-                display();
                 check();
                 p=playerX;
                 checkValidity();
@@ -91,29 +98,86 @@ class players{
             }
         }
         void check(){
-            char temp='.';
             for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
-                    if(grid[i][j]!='.' && grid[i][j]!=temp){
+                temp=grid[i][0];
+                for(j=1;j<3;j++){
+                    if(grid[i][j]=='.' || grid[i][j]!=temp){
                         temp=grid[i][j];
+                        break;
+                    }
+                    if(j==2){
+                        cout<<"1";
                         gameOver();
                     }
                 }
             }
             for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
-                    if(grid[j][i]!='.' && grid[i][i]!=temp){
+                temp=grid[0][i];
+                for(j=1;j<3;j++){
+                    if(grid[j][i]=='.' || grid[j][i]!=temp){
                         temp=grid[j][i];
+                        break;
+                    }
+                    if(j==2){
+                        cout<<"2";
                         gameOver();
                     }
                 }
             }
-            for(i=0;i<3;i++){
-                    if(grid[i][i]!='.' && grid[i][i]!=temp){
-                        temp=grid[i][j];
-                        gameOver();
+            temp=grid[0][0];
+            for(i=1;i<3;i++){
+                if(grid[i][i]=='.' || grid[i][i]!=temp){
+                    temp=grid[i][i];
+                    break;
+                }
+                if(i==2){
+                    cout<<"3";
+                    gameOver();
+                }
+            }
+            temp=grid[0][2];
+            for(i=1;i<3;i++){
+                if(grid[i][2-i]=='.' || grid[i][2-i]!=temp){
+                    temp=grid[i][2-i];
+                    break;
+                }
+                if(i==2){
+                    cout<<"4";
+                    gameOver();
+                }
+            }
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    if(grid[i][j]=='.'){
+                        return;
                     }
                 }
+            }
+            cout<<"Tie."<<endl;
+            temp='.';
+            gameOver();
+        }
+        void gameOver(){
+            display();
+            if(temp=='X'){
+                cout<<"The winner is "<<playerX<<endl;
+            }
+            else if(temp=='O'){
+                cout<<"The winner is "<<playerO<<endl;
+            }
+            cout<<"Would you like to play again? (Y/N)"<<endl;
+            cin>>temp;
+            if(temp=='Y'||temp=='y'){
+                gridReset();
+                checkValidity();
+            }
+            else if(temp=='N'||temp=='n'){
+               cout<<"Bye!";
+                exit(0);
+            }
+            else{
+                cout<<"Ivalid Choice"<<endl;
+                gameOver();
             }
         }
 };
