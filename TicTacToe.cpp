@@ -39,6 +39,7 @@ class players{
             return;
         }
         void display(){
+            cout<<endl;
             for(i=0;i<3;i++){
                 for(j=0;j<3;j++){
                     cout<<grid[i][j]<<" ";
@@ -98,7 +99,7 @@ class players{
             }
         }
         void check(){
-            for(i=0;i<3;i++){
+            for(i=0;i<3;i++){   //checks for rows
                 temp=grid[i][0];
                 for(j=1;j<3;j++){
                     if(grid[i][j]=='.' || grid[i][j]!=temp){
@@ -106,12 +107,11 @@ class players{
                         break;
                     }
                     if(j==2){
-                        cout<<"1";
                         gameOver();
                     }
                 }
             }
-            for(i=0;i<3;i++){
+            for(i=0;i<3;i++){ //checks for columns
                 temp=grid[0][i];
                 for(j=1;j<3;j++){
                     if(grid[j][i]=='.' || grid[j][i]!=temp){
@@ -119,34 +119,31 @@ class players{
                         break;
                     }
                     if(j==2){
-                        cout<<"2";
                         gameOver();
                     }
                 }
             }
             temp=grid[0][0];
-            for(i=1;i<3;i++){
+            for(i=1;i<3;i++){   //checks for primary diagonal
                 if(grid[i][i]=='.' || grid[i][i]!=temp){
                     temp=grid[i][i];
                     break;
                 }
                 if(i==2){
-                    cout<<"3";
                     gameOver();
                 }
             }
             temp=grid[0][2];
-            for(i=1;i<3;i++){
+            for(i=1;i<3;i++){   //checks of secondary diagonal
                 if(grid[i][2-i]=='.' || grid[i][2-i]!=temp){
                     temp=grid[i][2-i];
                     break;
                 }
                 if(i==2){
-                    cout<<"4";
                     gameOver();
                 }
             }
-            for(int i=0;i<3;i++){
+            for(int i=0;i<3;i++){   //checks for tie
                 for(int j=0;j<3;j++){
                     if(grid[i][j]=='.'){
                         return;
